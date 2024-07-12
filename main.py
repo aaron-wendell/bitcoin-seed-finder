@@ -8,19 +8,8 @@ from bit.network import NetworkAPI
 
 # Define the word list
 word_list = [
-    "tower", "moon", "food", "neck", "hope", "number", "day", "this", "first",
-    "find", "picture", "subject", "real", "only", "black",
-    "life", "matter", "pyramid", "brave", "welcome", "world", "police",
-    "camera", "survey", "flag", "rain", "virus", "model", "decide", "arrive",
-    "party", "need", "history", "order", "stable", "coin", "digital", "define",
-    "verify", "liberty", "public", "problem", "owner", "own", "spend", "common",
-    "solution", "creek", "system", "news", "confirm", "transfer", "one", "inspire",
-    "peace", "identify", "vote", "mask", "run", "double", "return", "trust",
-    "clock", "purpose", "sing", "know", "gun", "later", "proof", "time", "agree",
-    "neither", "state", "place", "second", "minute", "hour", "half", "color",
-    "green", "blue", "future", "battle", "glass", "top", "face", "twelve",
-    "country", 
-    # "phrase", "puzzle", "seed"
+    # write your word list
+    # example: "puzzle", "seed", "phrase"
 ]
 
 # Initialize Mnemonic and BIP32
