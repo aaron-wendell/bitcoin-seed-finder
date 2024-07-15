@@ -5,34 +5,23 @@ from bip32 import BIP32
 import hashlib
 import ecdsa
 from bit.network import NetworkAPI
-import random
-import base58
+import bech32  # Add this line to import the bech32 library
 
 # Define the word list
 word_list = [
-    "survey", "flag", "rain", "virus", "model", "liberty", "public", "problem", "owner",
-    "clock", "purpose", "sing", "know", "tower", "moon", "food", "neck", "hope", "number", "day", "this", "first",
-    "find", "picture", "subject", "real", "only", "black",
-    "life", "matter", "pyramid", "brave", "welcome", "world", "police",
-    "camera", "decide", "arrive",
-    "party", "need", "history", "order", "stable", "coin", "digital", "define",
-    "verify", "own", "spend", "common",
-    "solution", "creek", "system", "news", "confirm", "transfer", "one", "inspire",
-    "peace", "identify", "vote", "mask", "run", "double", "return", "trust",
-    "gun", "later", "proof", "time", "agree",
-    "neither", "state", "place", "second", "minute", "hour", "half", "color",
-    "green", "blue", "future", "battle", "glass", "top", "face", "twelve",
-    "country"
+    "elite", "usual", "surround", "kiwi", "angry", "aerobic", "force", "public", "awake",
+    "divide", "yellow", "foot", "remove", "cycle", "obvious", "seven", "business", "sister", "fortune", "coach", "oppose", "forest",
+    "dish", "detail"
 ]
 
 # Initialize Mnemonic and BIP32
 mnemo = Mnemonic("english")
 
-# Function to derive the first Bitcoin legacy address from a seed phrase
+# Function to derive the first Bitcoin native SegWit address from a seed phrase
 def derive_address(seed_phrase):
     seed = mnemo.to_seed(seed_phrase)
     root_key = BIP32.from_seed(seed)
-    child_key = root_key.get_privkey_from_path("m/44'/0'/0'/0/0")
+    child_key = root_key.get_privkey_from_path("m/84'/0'/0'/0/0")
 
     sk = ecdsa.SigningKey.from_string(child_key, curve=ecdsa.SECP256k1)
     vk = sk.get_verifying_key()
@@ -46,13 +35,11 @@ def derive_address(seed_phrase):
     ripemd160.update(sha256_1)
     hashed_public_key = ripemd160.digest()
 
-    address = b'\x00' + hashed_public_key  # Prepend 0x00 for mainnet
-    checksum = hashlib.sha256(hashlib.sha256(address).digest()).digest()[:4]
-    address += checksum
-    
-    # Convert to base58 - It means it will search for legacy address
-    address = base58.b58encode(address).decode('utf-8')
-    
+    # Create the SegWit address
+    witness_version = 0
+    witness_program = hashlib.new('sha256', public_key).digest()
+    address = bech32.encode('bc', witness_version, witness_program)
+
     return address
 
 # Function to check the balance of a Bitcoin address asynchronously
@@ -80,15 +67,14 @@ def log_tried_combinations(combination):
     with open("tried_combinations.log", "a") as f:
         f.write(" ".join(combination) + "\n")
 
-# Generate all combinations of 12 words
+# Generate all combinations of 24 words
 async def main():
     tried_combinations = read_tried_combinations()
 
-    for combination in itertools.combinations(word_list, 12):
+    for combination in itertools.combinations(word_list, 24):
 
         combination_list = list(combination)
-        random.shuffle(combination_list)
-        
+
         if tuple(combination_list) in tried_combinations:
             continue  # Skip already tried combinations
 
@@ -102,7 +88,7 @@ async def main():
         balance = await check_balance_async(address)
         if balance is not None:
             print(f"Address: {address}, Balance: {balance} satoshis")
-        
+
         # Log tried combination
         log_tried_combinations(combination_list)
 
