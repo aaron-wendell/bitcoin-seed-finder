@@ -10,7 +10,8 @@ import base58
 
 # Define the word list
 word_list = [
- # "find", "seed", "phrase"
+ # write your word list
+ # "puzzle", "find", "seed", "phrase"
 ]
 
 # Initialize Mnemonic and BIP32
