@@ -10,19 +10,7 @@ import base58
 
 # Define the word list
 word_list = [
-    "survey", "flag", "rain", "virus", "model", "liberty", "public", "problem", "owner",
-    "clock", "purpose", "sing", "know", "tower", "moon", "food", "neck", "hope", "number", "day", "this", "first",
-    "find", "picture", "subject", "real", "only", "black",
-    "life", "matter", "pyramid", "brave", "welcome", "world", "police",
-    "camera", "decide", "arrive",
-    "party", "need", "history", "order", "stable", "coin", "digital", "define",
-    "verify", "own", "spend", "common",
-    "solution", "creek", "system", "news", "confirm", "transfer", "one", "inspire",
-    "peace", "identify", "vote", "mask", "run", "double", "return", "trust",
-    "gun", "later", "proof", "time", "agree",
-    "neither", "state", "place", "second", "minute", "hour", "half", "color",
-    "green", "blue", "future", "battle", "glass", "top", "face", "twelve",
-    "country"
+ # "find", "seed", "phrase"
 ]
 
 # Initialize Mnemonic and BIP32
